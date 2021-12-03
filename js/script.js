@@ -1,39 +1,32 @@
-"use strict";
+require("es6-promise").polyfill();
+import "nodelist-foreach-polyfill";
+
+import tabs from "./modules/tabs";
+import timer from "./modules/timer";
+import slider from "./modules/slider";
+import modal from "./modules/modal";
+import forms from "./modules/forms";
+import cards from "./modules/cards";
+import calc from "./modules/calc"; // Импортировали все функции
+import { openModal } from "./modules/modal";
 
 window.addEventListener("DOMContentLoaded", () => {
-  const tabs = document.querySelectorAll(".tabheader__item"),
-    tabsContent = document.querySelectorAll(".tabcontent"),
-    tabsParent = document.querySelector(".tabheader__items");
-
-  function hideTabContent() {
-    tabsContent.forEach((item) => {
-      item.classList.add("hide");
-      item.classList.remove("show", "fade");
+    const modalTimerId = setTimeout(() => openModal(".modal", modalTimerId), 50000);
+    //Вызываем функции
+    tabs(".tabheader__item", ".tabcontent", ".tabheader__items", "tabheader__item_active");
+    timer(".timer", "2022-06-11");
+    slider({
+        container: ".offer__slider",
+        slide: ".offer__slide",
+        nextArrow: ".offer__slider-next",
+        prevArrow: ".offer__slider-prev",
+        totalCounter: ".total",
+        currentCounter: ".current",
+        wrapper: ".offer__slider-wrapper",
+        field: ".offer__slider-inner",
     });
-    tabs.forEach((item) => {
-      item.classList.remove("tabheader__item_active");
-    });
-  }
-
-  function showTabContent(i = 0) {
-    tabsContent[i].classList.add("show", "fade");
-    tabsContent[i].classList.remove("hide");
-    tabs[i].classList.add("tabheader__item_active");
-  }
-
-  hideTabContent();
-  showTabContent();
-
-  tabsParent.addEventListener("click", (event) => {
-    const target = event.target;
-
-    if (target && target.classList.contains("tabheader__item")) {
-      tabs.forEach((item, i) => {
-        if (target == item) {
-          hideTabContent();
-          showTabContent(i);
-        }
-      });
-    }
-  });
+    modal("[data-modal]", ".modal", modalTimerId);
+    forms("form", ".modal", modalTimerId);
+    cards();
+    calc();
 });
