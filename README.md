@@ -32,3 +32,7 @@ You can find it at ./js/services/services.js
 You can find it at ./js/modules/tabs.js
 
 **
+
+webpack and json-server used on this project
+
+
